@@ -41,9 +41,6 @@ jobs:
      git push --set-upstream origin master
     displayName: Add data.txt file
     workingDirectory: $(System.DefaultWorkingDirectory)
-  - checkout: self
-    clean: true
-    fetchTags: false
   - task: CmdLine@2
     displayName: Command Line Script
     inputs:
@@ -86,5 +83,3 @@ jobs:
     inputs:
       PathtoPublish: $(build.artifactstagingdirectory)
       TargetPath: '\\my\share\$(Build.DefinitionName)\$(Build.BuildNumber)'
-
-- 
