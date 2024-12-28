@@ -7,13 +7,6 @@ trigger:
  branches:
     include: 
     - main
- paths:
-    include: 
-    - src/web/*
-
-pool:
-  vmImage: windows-latest
-
 variables:
 - name: BuildParameters.RestoreBuildProjects
   value: '**/*.csproj'
@@ -27,27 +20,8 @@ jobs:
     name: Neotechagentpool
   steps:
   - checkout: self
-    persistCredentials: true
-
-  - script: |
-     git config --global user.email pipeline@demo.com & git config --global user.name "Pipeline
-     workingDirectory: $(System.DefaultWorkingDirectory)
-
-  - script: |
-     git checkout -b master
-     echo 'This is a test' > data.txt
-     git add -A
-     git commit -m "deployment $(Build.BuildNumber)"
-     git push --set-upstream origin master
-    displayName: Add data.txt file
-    workingDirectory: $(System.DefaultWorkingDirectory)
-  - task: CmdLine@2
-    displayName: Command Line Script
-    inputs:
-      script: |
-        echo Write your commands here
-        
-        echo Hello world
+    clean: true
+    fetchTags: false
   - task: DotNetCoreCLI@2
     displayName: Restore
     inputs:
